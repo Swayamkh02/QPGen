@@ -15,6 +15,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 const QPConfiguration = () => {
   const [classValue, setClassValue] = useState('');
   const [chapterName, setChapterName] = useState('');
+  const [difficulty, setDifficulty] = useState('');
   const [questionConfigs, setQuestionConfigs] = useState([
     { type: '', quantity: '' },
   ]);
@@ -27,6 +28,10 @@ const QPConfiguration = () => {
   // Handle change for chapter name
   const handleChapterChange = (event) => {
     setChapterName(event.target.value);
+  };
+
+  const handleDifficultyChange = (event) => {
+    setDifficulty(event.target.value);
   };
 
   // Handle change for individual question config
@@ -88,19 +93,33 @@ const QPConfiguration = () => {
           value={chapterName}
           onChange={handleChapterChange}
         />
+        <Select
+          fullWidth
+          value={difficulty}
+          onChange={handleDifficultyChange}
+          displayEmpty
+          sx={{ backgroundColor: '#fff' }}
+        >
+          <MenuItem value="" disabled>
+            Select Difficulty
+          </MenuItem>
+          <MenuItem value="Easy">Easy</MenuItem>
+          <MenuItem value="Medium">Medium</MenuItem>
+          <MenuItem value="Hard">Hard</MenuItem>
+        </Select>
       </Stack>
 
       {/* Dynamic Question Config Rows */}
       <Stack spacing={2} sx={{ mb: 3 }}>
         {questionConfigs.map((config, index) => (
           <Stack
-            direction="row"
+            direction={{ xs: 'column', sm: 'row' }}
             spacing={2}
             alignItems="center"
             key={index}
           >
             <Select
-              fullWidth
+              // fullWidth
               value={config.type}
               onChange={(e) =>
                 handleConfigChange(index, 'type', e.target.value)
@@ -119,7 +138,7 @@ const QPConfiguration = () => {
               <MenuItem value="Long Answer Questions">Long Answer Questions</MenuItem>
             </Select>
             <TextField
-              fullWidth
+              // fullWidth
               type="number"
               label="Quantity"
               value={config.quantity}

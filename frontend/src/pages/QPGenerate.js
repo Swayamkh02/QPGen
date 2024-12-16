@@ -8,8 +8,17 @@ import QPPreview from '../components/QPPreview';
 const QPGenerate = () => {
   const [activeTab, setActiveTab] = useState(0);
 
+  //file-upload
+  const [files, setFiles] = useState([]);
+
   const handleChange = (event, newValue) => {
     setActiveTab(newValue);
+  };
+
+  const setFileAndChangeTab = () => {
+    if(files.length>0){
+      setActiveTab(1);
+    }
   };
 
   return (
@@ -36,7 +45,7 @@ const QPGenerate = () => {
         <Box sx={{ marginTop: 4 }}>
             {activeTab === 0 && (
             <TabPanel>
-                <FileUpload/>
+                <FileUpload files={files} setFiles={setFiles} setFileAndChangeTab={setFileAndChangeTab}/>
             </TabPanel>
             )}
             {activeTab === 1 && (

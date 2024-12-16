@@ -3,8 +3,8 @@ import { Box, Button, Typography, List, ListItem, ListItemText } from '@mui/mate
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import ClearIcon from '@mui/icons-material/Clear';
 
-const FileUpload = () => {
-  const [files, setFiles] = useState([]);
+const FileUpload = ({files,setFiles,setFileAndChangeTab}) => {
+  // const [files, setFiles] = useState([]);
 
   // Handle file selection and filter by allowed types
   const handleFileChange = (event) => {
@@ -79,6 +79,18 @@ const FileUpload = () => {
           No files uploaded yet.
         </Typography>
       )}
+      <Box sx={{ textAlign: 'right' }}>
+        <Button
+          variant="contained"
+          // startIcon={<ClearIcon />}
+          color="primary"
+          onClick={setFileAndChangeTab}
+          disabled={files.length === 0}
+          sx={{ marginBottom: 2 }}
+        >
+          Upload and Make QP
+        </Button>
+      </Box>
     </Box>
   );
 };
