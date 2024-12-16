@@ -12,13 +12,17 @@ import {
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-const QPConfiguration = () => {
-  const [classValue, setClassValue] = useState('');
-  const [chapterName, setChapterName] = useState('');
-  const [difficulty, setDifficulty] = useState('');
-  const [questionConfigs, setQuestionConfigs] = useState([
-    { type: '', quantity: '' },
-  ]);
+const QPConfiguration = ({
+  classValue,
+  chapterName,
+  difficulty,
+  questionConfigs,
+  setClassValue,
+  setChapterName,
+  setDifficulty,
+  setQuestionConfigs,
+  handleSubmit
+}) => {
 
   // Handle change for class dropdown
   const handleClassChange = (event) => {
@@ -53,15 +57,15 @@ const QPConfiguration = () => {
   };
 
   // Submit the form
-  const handleSubmit = () => {
-    const payload = {
-      class: classValue,
-      chapter: chapterName,
-      configs: questionConfigs,
-    };
-    console.log('QP Configuration:', payload);
-    // Call your API here with the payload
-  };
+  // const handleSubmit = () => {
+  //   const payload = {
+  //     class: classValue,
+  //     chapter: chapterName,
+  //     configs: questionConfigs,
+  //   };
+  //   console.log('QP Configuration:', payload);
+  //   // Call your API here with the payload
+  // };
 
   return (
     <Box sx={{ p: 3, border: '1px solid #ddd', borderRadius: 2 }}>
