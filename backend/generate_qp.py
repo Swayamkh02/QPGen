@@ -1,0 +1,38 @@
+import os
+
+from utils import chunking, llm_provider, pdf_to_text, txt_to_text, question_list
+from constants import prompts
+
+
+def generate_final_prompt(data, context):
+    difficulty = data.get('difficulty')
+    question_list_obj = question_list.generate_question_list(data.get('configs', []))
+    question_str = question_list.convert_question_list_to_str(question_list=question_list_obj)
+    
+    # Format the final prompt using the template
+    final_prompt = prompts.QP_GEN_PROMPT_V1.format(
+        difficulty=difficulty,
+        questions_list=question_str,
+        context=context
+    )
+    
+    return final_prompt
+
+
+
+
+
+## Example usage
+# data = {
+#     "difficulty": "Hard",
+#     "configs": [
+#         {"type": "Multiple Choice Questions", "quantity": "12"},
+#         {"type": "Fill in the blanks", "quantity": "11"},
+#         {"type": "Short Answer Questions", "quantity": "20"},
+#         {"type": "True or False", "quantity": "20"}
+#     ]
+# }
+# context = "This chapter covers photosynthesis, respiration, and plant biology concepts."
+
+# final_prompt = generate_final_prompt(data, context)
+# print(final_prompt)
