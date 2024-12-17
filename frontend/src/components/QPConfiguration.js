@@ -12,12 +12,17 @@ import {
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-const QPConfiguration = () => {
-  const [classValue, setClassValue] = useState('');
-  const [chapterName, setChapterName] = useState('');
-  const [questionConfigs, setQuestionConfigs] = useState([
-    { type: '', quantity: '' },
-  ]);
+const QPConfiguration = ({
+  classValue,
+  chapterName,
+  difficulty,
+  questionConfigs,
+  setClassValue,
+  setChapterName,
+  setDifficulty,
+  setQuestionConfigs,
+  handleSubmit
+}) => {
 
   // Handle change for class dropdown
   const handleClassChange = (event) => {
@@ -27,6 +32,10 @@ const QPConfiguration = () => {
   // Handle change for chapter name
   const handleChapterChange = (event) => {
     setChapterName(event.target.value);
+  };
+
+  const handleDifficultyChange = (event) => {
+    setDifficulty(event.target.value);
   };
 
   // Handle change for individual question config
@@ -48,15 +57,15 @@ const QPConfiguration = () => {
   };
 
   // Submit the form
-  const handleSubmit = () => {
-    const payload = {
-      class: classValue,
-      chapter: chapterName,
-      configs: questionConfigs,
-    };
-    console.log('QP Configuration:', payload);
-    // Call your API here with the payload
-  };
+  // const handleSubmit = () => {
+  //   const payload = {
+  //     class: classValue,
+  //     chapter: chapterName,
+  //     configs: questionConfigs,
+  //   };
+  //   console.log('QP Configuration:', payload);
+  //   // Call your API here with the payload
+  // };
 
   return (
     <Box sx={{ p: 3, border: '1px solid #ddd', borderRadius: 2 }}>
@@ -88,19 +97,33 @@ const QPConfiguration = () => {
           value={chapterName}
           onChange={handleChapterChange}
         />
+        <Select
+          fullWidth
+          value={difficulty}
+          onChange={handleDifficultyChange}
+          displayEmpty
+          sx={{ backgroundColor: '#fff' }}
+        >
+          <MenuItem value="" disabled>
+            Select Difficulty
+          </MenuItem>
+          <MenuItem value="Easy">Easy</MenuItem>
+          <MenuItem value="Medium">Medium</MenuItem>
+          <MenuItem value="Hard">Hard</MenuItem>
+        </Select>
       </Stack>
 
       {/* Dynamic Question Config Rows */}
       <Stack spacing={2} sx={{ mb: 3 }}>
         {questionConfigs.map((config, index) => (
           <Stack
-            direction="row"
+            direction={{ xs: 'column', sm: 'row' }}
             spacing={2}
             alignItems="center"
             key={index}
           >
             <Select
-              fullWidth
+              // fullWidth
               value={config.type}
               onChange={(e) =>
                 handleConfigChange(index, 'type', e.target.value)
@@ -119,7 +142,7 @@ const QPConfiguration = () => {
               <MenuItem value="Long Answer Questions">Long Answer Questions</MenuItem>
             </Select>
             <TextField
-              fullWidth
+              // fullWidth
               type="number"
               label="Quantity"
               value={config.quantity}
