@@ -11,6 +11,6 @@ def get_text_chunks(pages):
     for i, chunk in enumerate(page_chunks):
         print(f"Chunk {i + 1}:\n{chunk}\n")
 
-    return page_chunks
+    return page_chunks  #returns a list of str
 
     

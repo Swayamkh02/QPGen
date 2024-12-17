@@ -18,6 +18,35 @@ def generate_final_prompt(data, context):
     
     return final_prompt
 
+def generate_from_pdf(data, file_path):
+
+    pdf_text = pdf_to_text.extract_text_from_pdf(file_path)
+    chunked_pdf_text = chunking.get_text_chunks(pdf_text)
+    context = "\n".join([ch for ch in chunked_pdf_text]) 
+
+    final_prompt = generate_final_prompt(data=data, context=context)
+    llm = llm_provider.get_groq_llm()
+
+    response = llm.invoke(input=[final_prompt])
+    if(response.content):
+        return {'qp':response.content,'success':True}
+    else:
+        return {'qp':None,'success':False}
+    
+def generate_from_txt(data, file_path):
+
+    txt_text = txt_to_text.extract_text_from_txt(file_path)
+    chunked_txt_text = chunking.get_text_chunks(txt_text)
+    context = "\n".join([ch for ch in chunked_txt_text]) 
+
+    final_prompt = generate_final_prompt(data=data, context=context)
+    llm = llm_provider.get_groq_llm()
+
+    response = llm.invoke(input=[final_prompt])
+    if(response.content):
+        return {'qp':response.content,'success':True}
+    else:
+        return {'qp':None,'success':False}
 
 
 
@@ -36,3 +65,10 @@ def generate_final_prompt(data, context):
 
 # final_prompt = generate_final_prompt(data, context)
 # print(final_prompt)
+# llm = llm_provider.get_groq_llm()
+# response = llm.invoke(input=[final_prompt])
+# if(response.content):
+#     print(response.content)
+# else:
+#     print(response)
+#     print("Error!!!")
