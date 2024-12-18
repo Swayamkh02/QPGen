@@ -54,6 +54,8 @@ def generate_from_txt(data, file_path):
 
 
 ## Example usage
+
+# path = "uploads\13_Light.txt"
 # data = {
 #     "difficulty": "Hard",
 #     "configs": [

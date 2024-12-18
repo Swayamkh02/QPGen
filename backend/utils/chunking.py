@@ -13,4 +13,6 @@ def get_text_chunks(pages):
 
     return page_chunks  #returns a list of str
 
+
+
     
