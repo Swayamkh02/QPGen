@@ -28,6 +28,7 @@ def generate_from_pdf(data, file_path):
     llm = llm_provider.get_groq_llm()
 
     response = llm.invoke(input=[final_prompt])
+    print(response)
     if(response.content):
         return {'qp':response.content,'success':True}
     else:
@@ -43,6 +44,7 @@ def generate_from_txt(data, file_path):
     llm = llm_provider.get_groq_llm()
 
     response = llm.invoke(input=[final_prompt])
+    print(response)
     if(response.content):
         return {'qp':response.content,'success':True}
     else:
