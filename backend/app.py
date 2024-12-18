@@ -1,11 +1,15 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS  # Import CORS
+
 import os
 from werkzeug.utils import secure_filename
 import json
 
-import generate_qp
+from generate_qp import generate_from_txt, generate_from_pdf
 
 app = Flask(__name__)
+CORS(app) 
+
 
 # Configuration
 UPLOAD_FOLDER = "uploads"  # Directory where uploaded files are saved
@@ -56,9 +60,9 @@ def generate_qp():
     # Call the appropriate function based on file type
     file_extension = filename.rsplit('.', 1)[1].lower()
     if file_extension == 'txt':
-        response = generate_qp.generate_from_txt(data, file_path)
+        response = generate_from_txt(data, file_path)
     elif file_extension == 'pdf':
-        response = generate_qp.generate_from_pdf(data, file_path)
+        response = generate_from_pdf(data, file_path)
     else:
         return jsonify({'error': 'Unsupported file type'}), 400
 
