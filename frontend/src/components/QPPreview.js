@@ -1,48 +1,51 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import { Document, Packer, Paragraph, TextRun } from 'docx';
+import MarkdownIt from 'markdown-it';
+import ReactMarkdown from 'react-markdown'; 
 
 const QPPreview = ({ qpContentFromParent }) => {
   const [qpContent, setQPContent] = useState('');
+  const mdParser = new MarkdownIt(); // Initialize markdown-it
 
-  // Sample content if no QP content is provided
   const sampleContent = `
-    Class: 10th
-    Chapter: Algebra
+    ## Generated Question Paper
 
-    1. What is 2 + 2? (MCQ)
-    a) 3
-    b) 4
-    c) 5
-    Answer: b) 4
+    ### Section A: Multiple Choice Questions (10)
+    1. What makes things visible?  
+       a) Light and eyes only  
+       b) Light and other objects  
+       c) Eyes alone  
+       d) Light alone  
+       **Answer:** a) Light and eyes only  
 
-    2. Solve for x: x + 5 = 10 (Fill in the Blanks)
-    Answer: 5
+    2. According to the laws of reflection, what is true about the angle of incidence and the angle of reflection?  
+       a) The angle of incidence is always greater than the angle of reflection  
+       b) The angle of incidence is always less than the angle of reflection  
+       c) The angle of incidence is equal to the angle of reflection  
+       d) The angle of incidence and the angle of reflection are perpendicular to each other  
+       **Answer:** c) The angle of incidence is equal to the angle of reflection  
   `;
 
-  // Use effect to set the QP content, prioritizing parent props over default
   useEffect(() => {
-    if (qpContentFromParent) {
-      setQPContent(qpContentFromParent);
-    } else {
-      setQPContent(sampleContent);
-    }
+    setQPContent(qpContentFromParent || sampleContent);
   }, [qpContentFromParent]);
 
-  // Function to download QP as Word file
+  const parseMarkdownToDocx = (markdown) => {
+    const html = mdParser.render(markdown); // Parse Markdown to HTML
+    const lines = html.replace(/<\/?[^>]+(>|$)/g, '').split('\n'); // Remove HTML tags
+
+    return lines.map((line) => new Paragraph(line.trim())); // Convert lines to docx paragraphs
+  };
+
   const downloadQP = () => {
+    const docContent = parseMarkdownToDocx(qpContent); // Convert Markdown to docx paragraphs
+
     const doc = new Document({
       sections: [
         {
           properties: {},
-          children: [
-            new Paragraph({
-              children: [
-                new TextRun("Generated Question Paper\n"), // Title
-                new TextRun(qpContent), // Break after title
-              ],
-            }),
-          ],
+          children: docContent, // Use parsed paragraphs
         },
       ],
     });
@@ -61,21 +64,18 @@ const QPPreview = ({ qpContentFromParent }) => {
         QP Preview
       </Typography>
 
-      {/* Display the Question Paper Preview */}
       <Box sx={{ border: '1px solid #ddd', borderRadius: 2, p: 2, mb: 2 }}>
-        <Typography variant="body1" sx={{ whiteSpace: 'pre-line' }}>
-          {qpContent}
-        </Typography>
+        <ReactMarkdown>{qpContent}</ReactMarkdown> {/* Render Markdown */}
       </Box>
 
-      {/* Download QP Button */}
+      {/* Download Button */}
       <Box sx={{ textAlign: 'right' }}>
         <Button
           variant="contained"
           color="primary"
           onClick={downloadQP}
           sx={{ paddingX: 4 }}
-          disabled={!qpContent} // Disable if no QP content is available
+          disabled={!qpContent}
         >
           Download QP
         </Button>

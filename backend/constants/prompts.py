@@ -32,6 +32,7 @@ Include the required number of questions as specified. Clearly label sections an
 1. All questions must be clear, concise, and error-free.  
 2. Avoid ambiguity and ensure questions are directly related to the provided context.  
 3. Maintain the specified question types and counts.  
+4. No need to provide answers to Long Questions and Short Questions and Answers
 
 ---
 
@@ -43,4 +44,14 @@ Below is the context or chapter content to base the questions on:
 ---
 
 Generate the question paper now.
+"""
+
+QP_MERGE_PROMPT_V1 = """
+Given below the questions for the question paper in parts, you need to merge the questions into one question paper with the below mention sections.
+Generate the question paper in the following structure:
+- **Section A**: (Example - MCQs or True/False if specified)
+- **Section B**: (Short Answer questions)
+- **Section C**: (Long Answer questions or critical thinking)
+
+{question_papers}
 """

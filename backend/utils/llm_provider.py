@@ -9,11 +9,20 @@ if not os.environ.get("GROQ_API_KEY"):
 
 def get_groq_llm():
     model = ChatGroq(
-        model="llama3-8b-8192",
+        model="llama-3.1-8b-instant",
+        #  model = "llama-3.3-70b-versatile",
         api_key=os.getenv("GROQ_API_KEY")  # Fetch API key from .env
     )
     # print("Model initialized successfully!")
     return model
+
+def get_text_token_count_groq(text):
+    model = ChatGroq(
+        # model="llama3-8b-8192",
+        model = "llama-3.3-70b-versatile",
+        api_key=os.getenv("GROQ_API_KEY"),  # Fetch API key from .env
+    )
+    return model.get_num_tokens(text=text)
 
 
 ## Example call to the above llm function which returns model object of langchain
