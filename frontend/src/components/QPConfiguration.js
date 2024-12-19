@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Box,
   Button,
@@ -21,15 +21,12 @@ const QPConfiguration = ({
   setChapterName,
   setDifficulty,
   setQuestionConfigs,
-  handleSubmit
+  handleSubmit,
 }) => {
-
-  // Handle change for class dropdown
   const handleClassChange = (event) => {
     setClassValue(event.target.value);
   };
 
-  // Handle change for chapter name
   const handleChapterChange = (event) => {
     setChapterName(event.target.value);
   };
@@ -38,43 +35,49 @@ const QPConfiguration = ({
     setDifficulty(event.target.value);
   };
 
-  // Handle change for individual question config
   const handleConfigChange = (index, field, value) => {
     const updatedConfigs = [...questionConfigs];
     updatedConfigs[index][field] = value;
     setQuestionConfigs(updatedConfigs);
   };
 
-  // Add a new question config row
   const addConfigRow = () => {
     setQuestionConfigs([...questionConfigs, { type: '', quantity: '' }]);
   };
 
-  // Remove a question config row
   const removeConfigRow = (index) => {
     const updatedConfigs = questionConfigs.filter((_, i) => i !== index);
     setQuestionConfigs(updatedConfigs);
   };
 
-  // Submit the form
-  // const handleSubmit = () => {
-  //   const payload = {
-  //     class: classValue,
-  //     chapter: chapterName,
-  //     configs: questionConfigs,
-  //   };
-  //   console.log('QP Configuration:', payload);
-  //   // Call your API here with the payload
-  // };
-
   return (
-    <Box sx={{ p: 3, border: '1px solid #ddd', borderRadius: 2 }}>
-      <Typography variant="h5" gutterBottom>
+    <Box
+      sx={{
+        p: 3,
+        border: '1px solid #ddd',
+        borderRadius: 2,
+        backgroundColor: '#f9f9f9',
+        maxWidth: '100%',
+      }}
+    >
+      <Typography
+        variant="h5"
+        gutterBottom
+        sx={{
+          fontSize: { xs: '1.5rem', md: '2rem' },
+          textAlign: 'center',
+          mb: 3,
+        }}
+      >
         QP Configuration
       </Typography>
 
       {/* Class Dropdown and Chapter Name Input */}
-      <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ mb: 3 }}>
+      <Stack
+        direction={{ xs: 'column', sm: 'row' }}
+        spacing={2}
+        sx={{ mb: 3, alignItems: 'center' }}
+      >
         <Select
           fullWidth
           value={classValue}
@@ -96,6 +99,7 @@ const QPConfiguration = ({
           label="Enter Chapter Name"
           value={chapterName}
           onChange={handleChapterChange}
+          size="medium"
         />
         <Select
           fullWidth
@@ -123,11 +127,9 @@ const QPConfiguration = ({
             key={index}
           >
             <Select
-              // fullWidth
+              fullWidth
               value={config.type}
-              onChange={(e) =>
-                handleConfigChange(index, 'type', e.target.value)
-              }
+              onChange={(e) => handleConfigChange(index, 'type', e.target.value)}
               displayEmpty
               sx={{ backgroundColor: '#fff' }}
             >
@@ -142,13 +144,14 @@ const QPConfiguration = ({
               <MenuItem value="Long Answer Questions">Long Answer Questions</MenuItem>
             </Select>
             <TextField
-              // fullWidth
+              fullWidth
               type="number"
               label="Quantity"
               value={config.quantity}
               onChange={(e) =>
                 handleConfigChange(index, 'quantity', e.target.value)
               }
+              size="medium"
             />
             <IconButton
               color="error"
@@ -167,6 +170,9 @@ const QPConfiguration = ({
           variant="outlined"
           startIcon={<AddCircleIcon />}
           onClick={addConfigRow}
+          sx={{
+            fontSize: { xs: '0.9rem', md: '1rem' },
+          }}
         >
           Add More Questions
         </Button>
@@ -178,7 +184,10 @@ const QPConfiguration = ({
           variant="contained"
           color="primary"
           onClick={handleSubmit}
-          sx={{ paddingX: 4 }}
+          sx={{
+            fontSize: { xs: '0.9rem', md: '1rem' },
+            paddingX: { xs: 2, md: 4 },
+          }}
         >
           Generate QP
         </Button>
