@@ -5,6 +5,9 @@ import FileUpload from '../components/FileUpload';
 import QPConfiguration from '../components/QPConfiguration';
 import QPPreview from '../components/QPPreview';
 
+import '../styles/QPGenerate.css'
+import Loader from '../components/Loader';
+
 const QPGenerate = () => {
   const [activeTab, setActiveTab] = useState(0);
 
@@ -77,15 +80,28 @@ const QPGenerate = () => {
 
   return (
     <div className="main-qp-div">
-      <h1>QP Generate Page</h1>
-      <p>Generate Question Papers here!</p>
-      <Box backgroundColor="#d8d8d8" margin={'3%'} minHeight={'60vh'}>
+      <h1 className="qp-title">Question Paper Generator</h1>
+      <p className="qp-subtitle">Easily generate customized question papers</p>
+      <Box className="qp-container" backgroundColor="#ddefff" margin={'3%'} minHeight={'60vh'}>
         {/* Tabs */}
         <Box sx={{ width: '100%', marginTop: 3 }}>
-          <Tabs value={activeTab} onChange={handleChange} centered>
+        <Tabs
+          value={activeTab}
+          onChange={handleChange}
+          centered={false} 
+          variant="scrollable" 
+          scrollButtons="auto"
+          sx={{
+            '& .MuiTab-root': {
+              fontSize: { xs: '0.75rem', sm: '1rem' }, 
+              minWidth: { xs: '80px', sm: '120px' },
+              padding: { xs: '6px', sm: '12px' }, 
+            },
+          }}
+        >
             <Tab label="File Upload" />
-            <Tab label="QP Configuration" />
-            <Tab label="QP Preview & Download" />
+            <Tab label="QP Configuration" disabled={!files.length>0}/>
+            <Tab label="QP Preview & Download" disabled={!qpData}/>
           </Tabs>
         </Box>
 
@@ -102,6 +118,7 @@ const QPGenerate = () => {
           )}
           {activeTab === 1 && (
             <TabPanel>
+              {!isLoading ?
               <QPConfiguration
                 classValue={classValue}
                 chapterName={chapterName}
@@ -113,7 +130,9 @@ const QPGenerate = () => {
                 setQuestionConfigs={setQuestionConfigs}
                 handleSubmit={handleSubmit}
               />
-              {isLoading && <p>Generating Question Paper...</p>}
+              :
+              <Loader/>
+              }
             </TabPanel>
           )}
           {activeTab === 2 && (

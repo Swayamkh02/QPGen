@@ -8,6 +8,7 @@ import About from './pages/About';
 
 //components
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 
 
 const App = () => {
@@ -20,6 +21,7 @@ const App = () => {
         <Route path="/qp-generate" element={<QPGenerate />} />
         <Route path="/about" element={<About />} />
       </Routes>
+      <Footer/>
     </Router>
   );
 };

@@ -29,23 +29,22 @@ const QPPreview = ({ qpContentFromParent }) => {
 
   useEffect(() => {
     setQPContent(qpContentFromParent || sampleContent);
-  }, [qpContentFromParent]);
+  }, [qpContentFromParent, sampleContent]);
 
   const parseMarkdownToDocx = (markdown) => {
-    const html = mdParser.render(markdown); // Parse Markdown to HTML
-    const lines = html.replace(/<\/?[^>]+(>|$)/g, '').split('\n'); // Remove HTML tags
+    const html = mdParser.render(markdown);
+    const lines = html.replace(/<\/?[^>]+(>|$)/g, '').split('\n');
 
-    return lines.map((line) => new Paragraph(line.trim())); // Convert lines to docx paragraphs
+    return lines.map((line) => new Paragraph(line.trim())); 
   };
 
   const downloadQP = () => {
-    const docContent = parseMarkdownToDocx(qpContent); // Convert Markdown to docx paragraphs
-
+    const docContent = parseMarkdownToDocx(qpContent);
     const doc = new Document({
       sections: [
         {
           properties: {},
-          children: docContent, // Use parsed paragraphs
+          children: docContent, 
         },
       ],
     });
@@ -59,12 +58,21 @@ const QPPreview = ({ qpContentFromParent }) => {
   };
 
   return (
-    <Box sx={{ p: 3, border: '1px solid #ddd', borderRadius: 2 }}>
-      <Typography variant="h5" gutterBottom>
+    <Box sx={{ p: {xs:1,sm:3}, border: '1px solid #ddd', borderRadius: 2 }}>
+      {/* <Typography variant="h5" gutterBottom>
         QP Preview
-      </Typography>
+      </Typography> */}
 
-      <Box sx={{ border: '1px solid #ddd', borderRadius: 2, p: 2, mb: 2 }}>
+      <Box
+        sx={{
+          border: '1px solid #ddd',
+          borderRadius: 2,
+          p: { xs: 0, sm: 2 },
+          mb: 2,
+          fontSize: { xs: '0.8rem', sm: '1rem' }, // Adjust font size for mobile
+          lineHeight: { xs: '1.2', sm: '1.5' }, // Adjust line height for readability
+        }}
+      >
         <ReactMarkdown>{qpContent}</ReactMarkdown> {/* Render Markdown */}
       </Box>
 

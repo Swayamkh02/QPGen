@@ -4,9 +4,7 @@ import UploadFileIcon from '@mui/icons-material/UploadFile';
 import ClearIcon from '@mui/icons-material/Clear';
 
 const FileUpload = ({files,setFiles,setFileAndChangeTab}) => {
-  // const [files, setFiles] = useState([]);
 
-  // Handle file selection and filter by allowed types
   const handleFileChange = (event) => {
     const uploadedFiles = Array.from(event.target.files);
     const filteredFiles = uploadedFiles.filter((file) => {
@@ -79,7 +77,7 @@ const FileUpload = ({files,setFiles,setFileAndChangeTab}) => {
           No files uploaded yet.
         </Typography>
       )}
-      <Box sx={{ textAlign: 'right' }}>
+      <Box sx={{ textAlign: { xs: 'center', sm: 'right' }, }}>
         <Button
           variant="contained"
           // startIcon={<ClearIcon />}

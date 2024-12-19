@@ -29,10 +29,12 @@ Include the required number of questions as specified. Clearly label sections an
 ---
 
 ### **Guidelines**:
+0. Make only those questions which user has instructed to make wth respective count.
 1. All questions must be clear, concise, and error-free.  
 2. Avoid ambiguity and ensure questions are directly related to the provided context.  
 3. Maintain the specified question types and counts.  
-4. No need to provide answers to Long Questions and Short Questions and Answers
+4. No need to provide answers to Long Questions and Short Questions and Answers.
+5. If the question paper is too large, Do not give answers with questions.
 
 ---
 
