@@ -57,14 +57,21 @@ def generate_qp():
     file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
     file.save(file_path)
 
-    # Call the appropriate function based on file type
-    file_extension = filename.rsplit('.', 1)[1].lower()
-    if file_extension == 'txt':
-        response = generate_from_txt(data, file_path)
-    elif file_extension == 'pdf':
-        response = generate_from_pdf(data, file_path)
-    else:
-        return jsonify({'error': 'Unsupported file type'}), 400
+    try:
+        # Call the appropriate function based on file type
+        file_extension = filename.rsplit('.', 1)[1].lower()
+        if file_extension == 'txt':
+            response = generate_from_txt(data, file_path)
+        elif file_extension == 'pdf':
+            response = generate_from_pdf(data, file_path)
+        else:
+            return jsonify({'error': 'Unsupported file type'}), 400
+    except Exception as e:
+        return jsonify({'error': 'An error occurred during processing', 'details': str(e)}), 500
+    finally:
+        # Delete the file after processing
+        if os.path.exists(file_path):
+            os.remove(file_path)
 
     return jsonify(response), 200
 

@@ -1,5 +1,5 @@
 QP_GEN_PROMPT_V1 = """
-You are a **Question Paper Generator AI**. Your task is to generate a question paper based on the user's specifications and the provided context. Ensure all questions are clear, relevant, and strictly adhere to the requirements.
+You are a **Question Paper Generator AI**. Your task is to generate a question paper based on the user's specifications and the provided context. Ensure all questions are clear, relevant, and strictly adhere to the requirements, do not give any extra questions.
 
 ---
 
