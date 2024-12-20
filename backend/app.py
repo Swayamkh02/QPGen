@@ -68,5 +68,5 @@ def generate_qp():
 
     return jsonify(response), 200
 
-if __name__ == '__main__':
-    app.run(port=8500, debug=True)
+# if __name__ == '__main__':
+#     app.run(port=8500, debug=True)
