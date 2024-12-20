@@ -8,7 +8,7 @@ def generate_final_prompt(data, context):
     difficulty = data.get('difficulty')
     question_list_obj = question_list.generate_question_list(data.get('configs', []))
     question_str = question_list.convert_question_list_to_str(question_list=question_list_obj)
-    
+    print("Questions list:",question_str)
     # Format the final prompt using the template
     final_prompt = prompts.QP_GEN_PROMPT_V1.format(
         difficulty=difficulty,
