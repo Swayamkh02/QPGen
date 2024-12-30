@@ -57,7 +57,7 @@ const QPGenerate = () => {
       formData.append('file', files[0]); // Attach the first file
       formData.append('data', JSON.stringify(payload)); // Attach JSON payload
 
-      const response = await fetch('https://qpgen-lgap.onrender.com/generate_qp', {
+      const response = await fetch('https://qpgen-l.onrender.com/generate_qp', {
         method: 'POST',
         body: formData, // Send formData
       });
