@@ -2,6 +2,8 @@ from PIL import Image
 import pytesseract
 import fitz  # PyMuPDF
 from langchain_community.document_loaders import PyPDFLoader
+from langchain.schema import Document
+
 
 
 # def extract_text_from_pdf(pdf_path):
@@ -31,9 +33,10 @@ def extract_text_from_pdf(pdf_path):
         pix = page.get_pixmap() 
         img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
         image_text = pytesseract.image_to_string(img)
-        extracted_pages.append({
-            'page_content':image_text,
-            'metadata':{'source': pdf_path, 'page': page_num}
-        })
+        extracted_pages.append(Document(
+            page_content=image_text,
+            metadata={'source': pdf_path, 'page': page_num}
+        )
+        )
 
     return extracted_pages
