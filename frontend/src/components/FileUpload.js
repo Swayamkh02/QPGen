@@ -7,14 +7,22 @@ const FileUpload = ({files,setFiles,setFileAndChangeTab}) => {
 
   const handleFileChange = (event) => {
     const uploadedFiles = Array.from(event.target.files);
+    // const filteredFiles = uploadedFiles.filter((file) => {
+    //   const fileType = file.name.split('.').pop().toLowerCase();
+    //   return fileType === 'pdf' || fileType === 'txt';
+    // });
     const filteredFiles = uploadedFiles.filter((file) => {
       const fileType = file.name.split('.').pop().toLowerCase();
-      return fileType === 'pdf' || fileType === 'txt';
+      return fileType === 'txt';
     });
 
+    // if (filteredFiles.length < uploadedFiles.length) {
+    //   alert('Only .pdf or .txt files are allowed.');
+    // }
     if (filteredFiles.length < uploadedFiles.length) {
-      alert('Only .pdf or .txt files are allowed.');
+      alert('Only .txt files are allowed.');
     }
+
 
     setFiles((prevFiles) => [...prevFiles, ...filteredFiles]);
   };
